@@ -1,0 +1,1 @@
+[ ] Remove a User out of a team is actually more complicated. We need to look for all groups and the user's granted priviledges to repositories.
