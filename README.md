@@ -32,7 +32,17 @@ In order to use this CLI, the following environment variables are required:
 | BITBUCKET_USERNAME      | The username to authorize access to BitBucket resources |
 | BITBUCKET_PASSWORD      | The password of the username                            |
 
+The configuration is loaded in order (the latter overrides the former):
 
+- The `$HOME/.bitbucklet` file.
+- The file defined using environment variable `BITBUCKLET_CONFIG_FILE`.
+- The `.env` at the current `PYTHON_PATH`.
+
+Tips: You can generate an empty configuration file using the command:
+
+```bash
+bitbucklet cfg make-blank
+```
 
 ## Usage
 
@@ -53,7 +63,7 @@ Commands:
     users   Managing users
 ```
 
-Some popular use case
+Some common use case:
 
 ```bash
 # List all users
@@ -63,7 +73,7 @@ bitbucklet users list
 bitbucklet groups list
 
 # List users of group `developers`.
-# Please note, `developer` is a slug of the group.
+# Please note, `developers` is a slug of the group.
 bitbucklet groups list-user developers
 
 # Add a user into the team
