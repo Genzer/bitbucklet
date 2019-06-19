@@ -17,6 +17,8 @@ def users_cli():
 @click.command(name = 'list', help = 'List all the users (sort of)')
 @click.option('--verbose', is_flag=True, default=False)
 def list_users(verbose: bool):
+    from tabulate import tabulate
+
     bitbucket_team_name = os.getenv('BITBUCKET_TEAM')
 
     access_token = get_access_token()
@@ -31,7 +33,10 @@ def list_users(verbose: bool):
         return
 
     members = response.json()
-    [print(member['username']) for member in members['values']]
+    
+    table = [[member['display_name'], member['account_id'], member['uuid']] for member in members['values'] ]
+    headers = ['display_name', 'account_id', 'uuid']
+    print(tabulate(table, headers=headers, showindex=range(1, len(table) + 1), tablefmt='github'))
 
 @click.command(name = 'add', help = 'Add an user')
 @click.argument('username')

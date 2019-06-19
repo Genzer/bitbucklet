@@ -9,6 +9,10 @@ from requests import HTTPError
 from bitbucklet.token import get_access_token, BearerAuth
 from bitbucklet.urls import groups_url
 
+import logging
+
+logger = logging.getLogger("groups_cli")
+
 @click.group(name='groups', help = 'Managing groups')
 def groups_cli():
     pass
@@ -71,6 +75,9 @@ def groups_del(group_name: str):
 @click.option('--verbose', is_flag=True, default=False, help="Print JSON output")
 @click.argument('group_name')
 def groups_list_user(verbose: bool, group_name: str):
+    from tabulate import tabulate
+    from itertools import count
+
     bitbucket_team_name = os.getenv('BITBUCKET_TEAM')
 
     access_token = get_access_token()
@@ -87,8 +94,11 @@ def groups_list_user(verbose: bool, group_name: str):
         return
 
     members = response.json()
-    [print(member['username']) for member in members]
 
+    table = [[member['display_name'], member['account_id'], member['uuid'], member['resource_uri']] for member in members ]
+    headers = ['display_name', 'account_id', 'uuid', 'resource_uri']
+    print(tabulate(table, headers=headers, showindex=range(1, len(table) + 1), tablefmt='github'))
+    
 @click.command(name='add-user', help = 'Add a user into a group')
 @click.argument('group_name')
 @click.argument('username')
