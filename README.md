@@ -78,7 +78,7 @@ bitbucklet groups list-user developers
 
 # Add a user into the team
 # Here you can use both username or primary email address.
-bitbucklet users add new_user@myorg.com
+bitbucklet users invite new_user@myorg.com
 
 ```
 
