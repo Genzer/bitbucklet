@@ -40,6 +40,14 @@ def get_access_token():
     """
     Obtains BitBucket AccessToken using the Resource Owner Grant Flow.
 
+    Note:
+    ====
+    Previously, bitbucklet requires username and password of the account to get
+    an Access Token. This was done because the Atlasssian document said so.
+
+    However, this is not the case. Using the `client` and `secret` of the OAuth Consumer
+    is enough.
+
     References:
     ====
 
@@ -50,8 +58,6 @@ def get_access_token():
 
     bitbucket_client_id = os.getenv('BITBUCKET_CLIENT_ID')
     bitbucket_client_secret = os.getenv('BITBUCKET_CLIENT_SECRET')
-    username = os.getenv('BITBUCKET_USERNAME')
-    password = os.getenv('BITBUCKET_PASSWORD')
 
     response = requests.post(
         token_url(),
@@ -60,9 +66,7 @@ def get_access_token():
             'Accept': 'application/json'
         },
         data = {
-            'grant_type': 'client_credentials',
-            'username': username,
-            'password': password
+            'grant_type': 'client_credentials'
         }
     )
 
