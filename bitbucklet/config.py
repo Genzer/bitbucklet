@@ -22,12 +22,7 @@ def generate_empty_bitbucklet_dotenv(overwrite: bool, path: click.Path):
         dotenv.write(cleandoc("""
         # Here are very important environment variables
         # required by bitbucket_cli.
-
-        # The user used here should be granted with
-        # enough permissions. See README.md OAuth
-        BITBUCKET_USERNAME=
-        BITBUCKET_PASSWORD=
-
+        
         # If you don't have a dedicated BitBucket App, simply
         # create an OAuth2 Consumer in your BitBucket Settings.
         BITBUCKET_CLIENT_ID=

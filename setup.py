@@ -5,7 +5,7 @@ setup(
     description = "A small CLI to manage BitBucket Cloud",
     author = "Genzer Hawker",
     author_email = "genzers@gmail.com",
-    version='0.3.0',
+    version='0.3.1',
     py_modules=['bitbucklet.cli'],
     packages = find_packages(),
     install_requires=[
