@@ -17,7 +17,8 @@ repository:write
 repository:admin
 account:write
 team:write
-project:write"
+project:write
+webhook
 ```
 
 #### The `.env` File
@@ -29,8 +30,6 @@ In order to use this CLI, the following environment variables are required:
 | BITBUCKET_TEAM          | Your BitBucket team ID                                  |
 | BITBUCKET_CLIENT_ID     | Your OAuth consumer ID                                  |
 | BITBUCKET_CLIENT_SECRET | Your OAuth consumer Secret                              |
-| BITBUCKET_USERNAME      | The username to authorize access to BitBucket resources |
-| BITBUCKET_PASSWORD      | The password of the username                            |
 
 The configuration is loaded in order (the latter overrides the former):
 
