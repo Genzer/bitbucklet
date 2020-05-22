@@ -29,8 +29,6 @@ In order to use this CLI, the following environment variables are required:
 | BITBUCKET_TEAM          | Your BitBucket team ID                                  |
 | BITBUCKET_CLIENT_ID     | Your OAuth consumer ID                                  |
 | BITBUCKET_CLIENT_SECRET | Your OAuth consumer Secret                              |
-| BITBUCKET_USERNAME      | The username to authorize access to BitBucket resources |
-| BITBUCKET_PASSWORD      | The password of the username                            |
 
 The configuration is loaded in order (the latter overrides the former):
 
@@ -58,7 +56,9 @@ Options:
     --help   Show this message and exit.
 
 Commands:
+    cfg
     groups  Managing groups
+    repos   Managing repositories
     tokens  Tokens
     users   Managing users
 ```
@@ -80,6 +80,12 @@ bitbucklet groups list-user developers
 # Here you can use both username or primary email address.
 bitbucklet users invite new_user@myorg.com
 
+
+# Grant 'write' permission for a User to a Repository
+bitbucklet repos grant -u $USER_UIID --access read awesome-repository
+
+# Revoke access of a User
+bitbucklet repos revoke -u $USER_UUID awesome-repository
 ```
 
 ## Development
