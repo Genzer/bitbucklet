@@ -13,3 +13,9 @@ def teams_url():
 
 def team_invitations_url():
     return "https://api.bitbucket.org/1.0/users/{team}/invitations"
+
+def users_privileges_url():
+    return 'https://bitbucket.org/!api/internal/privileges/{team}/{repo}/{user_id}/'
+
+def groups_privileges_url():
+    return 'https://bitbucket.org/!api/1.0/group-privileges/{team}/{repo}/{team_id}/{group}/?exclude-members=1'
