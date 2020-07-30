@@ -2,6 +2,8 @@ import click
 from typing import Type
 from pathlib import Path
 
+BITBUCKLET_DOTENV_TEMPLATE = Path(__file__).parent / '__bitbucklet_config_template.env'
+
 @click.group(name = 'cfg')
 def cfg_cli():
     pass
@@ -18,17 +20,7 @@ def generate_empty_bitbucklet_dotenv(overwrite: bool, path: click.Path):
         raise BadParameter(f"Path {bitbucklet_dotenv_at_home} is existing. Use --overwrite to overwirte its content.")
 
     with open(bitbucklet_dotenv_at_home, 'w') as dotenv:
-        from inspect import cleandoc
-        dotenv.write(cleandoc("""
-        # Here are very important environment variables
-        # required by bitbucket_cli.
-        
-        # If you don't have a dedicated BitBucket App, simply
-        # create an OAuth2 Consumer in your BitBucket Settings.
-        BITBUCKET_CLIENT_ID=
-        BITBUCKET_CLIENT_SECRET=
-
-        BITBUCKET_TEAM=
-        """))
+        with open(BITBUCKLET_DOTENV_TEMPLATE, 'r') as template:
+            dotenv.write(template.readlines)
 
 cfg_cli.add_command(generate_empty_bitbucklet_dotenv)
