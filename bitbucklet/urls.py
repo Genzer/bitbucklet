@@ -19,3 +19,6 @@ def users_privileges_url():
 
 def groups_privileges_url():
     return 'https://bitbucket.org/!api/1.0/group-privileges/{team}/{repo}/{team_id}/{group}/?exclude-members=1'
+
+def user_accesses_url():
+    return "https://bitbucket.org/!api/internal/user/{team_id}/access/{user_id}"
