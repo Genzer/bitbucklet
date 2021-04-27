@@ -11,6 +11,9 @@ def groups_url():
 def teams_url():
     return 'https://api.bitbucket.org/2.0/teams/{team}'
 
+def repos_url():
+    return 'https://api.bitbucket.org/2.0/repositories/{team}'
+
 def team_invitations_url():
     return "https://api.bitbucket.org/1.0/users/{team}/invitations"
 
