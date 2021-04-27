@@ -8,11 +8,36 @@ import requests
 from requests import HTTPError
 
 from bitbucklet.token import get_access_token, BearerAuth
-from bitbucklet.urls import teams_url, users_privileges_url, groups_privileges_url
+from bitbucklet.urls import teams_url, users_privileges_url, groups_privileges_url, repos_url
 
-@click.group(name='repos', help = 'Managing repositories')
+@click.group(name='repos', help = 'Managing repositories and their permissions')
 def repos_cli():
     pass
+
+@click.command(name = 'list-in-project', help = 'List repositories in a project')
+@click.argument("project")
+def list_in_project(project: str) -> None:
+    bitbucket_team_name = os.getenv('BITBUCKET_TEAM')
+    access_token = get_access_token()
+
+    get_repos_in_project_response = requests.get(
+        repos_url()
+            .format(team=bitbucket_team_name),
+        auth = BearerAuth(access_token),
+        params = {
+            'q': f"project.key=\"{project}\"",
+            'pagelen': 100
+        }
+    )
+    
+    if get_repos_in_project_response.status_code != 200:
+        logging.error(get_repos_in_project_response.text)
+        raise RuntimeError(f"Fail to obtain repositories in project {project} in team {bitbucket_team_name}")
+
+    repositories = get_repos_in_project_response.json()['values']
+    names = [repo['name'] for repo in repositories]
+    for name in names:
+        print(name)
 
 @click.command(name = 'grant', help = 'Grant access to user or group')
 @click.option("-u", "--user", "user", help="Id (bitbucket) of the user. Mutual exists with --group")
@@ -144,3 +169,4 @@ def __revoke_user_access(user_id: str, repo: str):
 
 repos_cli.add_command(grant_access)
 repos_cli.add_command(revoke_access)
+repos_cli.add_command(list_in_project)
