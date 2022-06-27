@@ -8,7 +8,12 @@ import requests
 from requests import HTTPError
 
 from bitbucklet.token import get_access_token, BearerAuth
-from bitbucklet.urls import teams_url, users_privileges_url, groups_privileges_url, repos_url
+from bitbucklet.urls import (
+    teams_url,
+    users_privileges_url,
+    groups_privileges_url,
+    group_privileges_1_0_url,
+    repos_url)
 
 @click.group(name='repos', help = 'Managing repositories and their permissions')
 def repos_cli():
@@ -72,20 +77,23 @@ def __grant_group_access(group_slug: str, access: str, repo: str):
     bitbucket_team_uuid = get_team_response.json()['uuid']
 
     response = requests.put(
-        groups_privileges_url()
+        group_privileges_1_0_url()
             .format(
                 team=bitbucket_team_name,
                 team_id=bitbucket_team_uuid,
                 repo=repo,
-                group=group_slug),
+                group=group_slug
+            ),
         auth = BearerAuth(access_token),
         headers = {
-            'Content-Type': 'text/plain'
+            'Content-Type': 'text/plain',
         },
-        data = access,
+        data = access
     )
 
-    print(response)
+    response.raise_for_status()
+    logging.debug(response.json())
+    print('OK')
 
 def __grant_user_access(user_id: str, access: str, repo: str):
     logging.info(f"Grant user {user_id} to {access} on {repo}")

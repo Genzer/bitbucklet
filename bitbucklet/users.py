@@ -32,9 +32,9 @@ def list_users(verbose: bool):
         print(json.dumps(json.loads(response.text), indent=2))
         return
 
-    members = response.json()
+    members = response.json()['values']
     
-    table = [[member['display_name'], member['account_id'], member['uuid']] for member in members['values'] ]
+    table = [[member['user']['display_name'], member['user']['account_id'], member['user']['uuid']] for member in members ]
     headers = ['display_name', 'account_id', 'uuid']
     print(tabulate(table, headers=headers, showindex=range(1, len(table) + 1), tablefmt='github'))
 
