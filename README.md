@@ -1,5 +1,7 @@
 # bitbucklet - BitBucket CLI
 
+**DEPRECATION NOTICE: As of 2022, this repository is no longer maintained because I now mostly use GitHub instead of BitBucket.**
+
 This is a small CLI developed to interact with BitBucket Cloud API for easily manipulate the BitBucket Team.
 
 [TOC]
